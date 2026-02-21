@@ -10,26 +10,26 @@ function SideBar({ sideBarOpen, setSideBarOpen }) {
 
   return (
     <div className="">
-      <div className='border-r w-64 h-full py-4 md:block hidden'>
+      <div className='border-r w-64 h-full py-4 md:block hidden rounded-tr-2xl rounded-br-2xl bg-black text-white'>
         <Link to="/admin/dashboard"><h1 className='flex items-center justify-center font-bold text-xl'> <ShieldUser size={30} /> Admin Dashboard</h1></Link>
         <div className="flex flex-col w-full px-4 gap-2">
-          <Link to="/admin/dashboard" className={`p-3 font-bold hover:bg-gray-400 rounded-lg ${location.pathname === "/admin/dashboard" ? "bg-gray-400" : ""}`}>Dashboard</Link>
-          <Link to="/admin/products" className={`p-3 font-bold hover:bg-gray-400 rounded-lg ${location.pathname === "/admin/products" ? "bg-gray-400" : ""}`}>Products</Link>
-          <Link to="/admin/orders" className={`p-3 font-bold hover:bg-gray-400 rounded-lg ${location.pathname === "/admin/orders" ? "bg-gray-400" : ""}`}>Orders</Link>
+          <Link to="/admin/dashboard" className={`p-3 font-bold hover:bg-orange-400 rounded-lg ${location.pathname === "/admin/dashboard" ? "bg-orange-400" : ""}`}>Dashboard</Link>
+          <Link to="/admin/products" className={`p-3 font-bold hover:bg-orange-400 rounded-lg ${location.pathname === "/admin/products" ? "bg-orange-400" : ""}`}>Products</Link>
+          <Link to="/admin/orders" className={`p-3 font-bold hover:bg-orange-400 rounded-lg ${location.pathname === "/admin/orders" ? "bg-orange-400" : ""}`}>Orders</Link>
         </div>
       </div>
 
       <Sheet open={sideBarOpen} onOpenChange={setSideBarOpen} >
-        <SheetContent side="left" className="w-70">
+        <SheetContent side="left" className="w-70 rounded-tr-2xl rounded-br-2xl bg-black text-white">
           <SheetHeader>
             <SheetTitle>
-              <Link to="/admin/dashboard"><h1 className='flex items-center justify-center font-bold text-xl'> <ShieldUser size={30} /> Admin Dashboard</h1></Link>
+              <Link to="/admin/dashboard"><h1 className='flex items-center justify-center font-bold text-xl text-white'> <ShieldUser size={30} /> Admin Dashboard</h1></Link>
             </SheetTitle>
           </SheetHeader>
           <div className="flex flex-col w-full px-4 gap-2">
-            <Link to="/admin/dashboard" className={`p-3 font-bold hover:bg-gray-400 rounded-lg ${location.pathname === "/admin/dashboard" ? "bg-gray-400" : ""}`} onClick={() => setSideBarOpen(false)}>Dashboard</Link>
-            <Link to="/admin/products" className={`p-3 font-bold hover:bg-gray-400 rounded-lg ${location.pathname === "/admin/products" ? "bg-gray-400" : ""}`} onClick={() => setSideBarOpen(false)}>Products</Link>
-            <Link to="/admin/orders" className={`p-3 font-bold hover:bg-gray-400 rounded-lg ${location.pathname === "/admin/orders" ? "bg-gray-400" : ""}`} onClick={() => setSideBarOpen(false)}>Orders</Link>
+            <Link to="/admin/dashboard" className={`p-3 font-bold hover:bg-orange-400 rounded-lg ${location.pathname === "/admin/dashboard" ? "bg-orange-400" : ""}`} onClick={() => setSideBarOpen(false)}>Dashboard</Link>
+            <Link to="/admin/products" className={`p-3 font-bold hover:bg-orange-400 rounded-lg ${location.pathname === "/admin/products" ? "bg-orange-400" : ""}`} onClick={() => setSideBarOpen(false)}>Products</Link>
+            <Link to="/admin/orders" className={`p-3 font-bold hover:bg-orange-400 rounded-lg ${location.pathname === "/admin/orders" ? "bg-orange-400" : ""}`} onClick={() => setSideBarOpen(false)}>Orders</Link>
           </div>
         </SheetContent>
       </Sheet>
