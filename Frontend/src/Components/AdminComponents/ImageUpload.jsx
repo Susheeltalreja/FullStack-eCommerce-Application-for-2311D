@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import { CloudIcon, FolderIcon, X } from 'lucide-react';
+import { Check, CloudIcon, FolderIcon, X } from 'lucide-react';
 import { Button } from '../ui/button';
+import axios from 'axios';
 
 function ImageUpload() {
 
@@ -29,6 +30,13 @@ function ImageUpload() {
         }
     }
 
+    async function HandleUploadImage(){
+        const data = new FormData();
+        data.append("ProductImage", Image)
+        const response = await axios.post("http://localhost:5000/product/upload", data)
+        console.log("Response", response)
+    }
+
     return (
         <div className="space-y-2">
             <Label>Product Image</Label>
@@ -46,6 +54,7 @@ function ImageUpload() {
                             <FolderIcon size={40}/>
                             <h2>{Image.name}</h2>
                             <Button variant='outline' onClick={() => HandleRemove()}><X /></Button>
+                            <Button variant='outline' onClick={() => HandleUploadImage()}><Check /></Button>
                         </div>
                     )
                 }
