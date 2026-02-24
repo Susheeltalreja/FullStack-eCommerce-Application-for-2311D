@@ -12,6 +12,8 @@ mongoose.connect(process.env.MONGOOSE_URL).then(() => console.log("Mongo db conn
 //Routes for auth
 const AuthRoutes = require("./Routes/AuthRoutes");
 
+//Product Routes
+const ProductRoutes = require("./Routes/AdminRoutes/ProductRoute");
 // Port
 const PORT = process.env.PORT;
 // redeclare the exprews
@@ -27,5 +29,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/auth", AuthRoutes);
+app.use("/product", ProductRoutes)
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
