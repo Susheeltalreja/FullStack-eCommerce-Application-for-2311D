@@ -59,7 +59,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                     <div className="px-4 space-y-2 overflow-auto">
 
                         <div className="">
-                            <ImageUpload />
+                            <ImageUpload ProductData={ProductData} setProductData={setProductData}/>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                             {

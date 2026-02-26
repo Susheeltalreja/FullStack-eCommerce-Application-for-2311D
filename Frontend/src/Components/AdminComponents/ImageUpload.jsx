@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import { Check, CloudIcon, FolderIcon, X } from 'lucide-react';
+import { Check, CloudIcon, FolderIcon, Lock, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import axios from 'axios';
 
-function ImageUpload() {
+function ImageUpload({ ProductData, setProductData }) {
 
     const [Image, setImage] = useState("");
     const InputRef = useRef();
@@ -23,18 +23,21 @@ function ImageUpload() {
         setImage(e.dataTransfer.files[0]);
     }
 
-    function HandleRemove(){
+    function HandleRemove() {
         setImage("");
-        if(InputRef.current.value){
+        if (InputRef.current.value) {
             InputRef.current.value = ""
         }
     }
 
-    async function HandleUploadImage(){
+    async function HandleUploadImage() {
         const data = new FormData();
         data.append("ProductImage", Image)
         const response = await axios.post("http://localhost:5000/product/upload", data)
-        console.log("Response", response)
+        setProductData({
+            ...ProductData,
+            ProductImage: response?.data?.address
+        })
     }
 
     return (
@@ -51,10 +54,18 @@ function ImageUpload() {
                         <h1>Drag & Drop or Click to Select Image</h1>
                     </div>) : (
                         <div className="w-full flex justify-around items-center">
-                            <FolderIcon size={40}/>
-                            <h2>{Image.name}</h2>
-                            <Button variant='outline' onClick={() => HandleRemove()}><X /></Button>
-                            <Button variant='outline' onClick={() => HandleUploadImage()}><Check /></Button>
+                            <FolderIcon size={40} />
+                            <h2 className='w-[150px]'>{Image.name}</h2>
+                            {
+                                ProductData.ProductImage ? (<div className=''>
+                                    <Lock />
+                                </div>) : (
+                                    <div className="">
+                                        <Button variant='outline' onClick={() => HandleRemove()}><X /></Button>
+                                        <Button variant='outline' onClick={() => HandleUploadImage()}><Check /></Button>
+                                    </div>
+                                )
+                            }
                         </div>
                     )
                 }
