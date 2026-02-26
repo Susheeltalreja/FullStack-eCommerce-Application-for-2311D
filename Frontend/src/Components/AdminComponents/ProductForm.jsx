@@ -6,6 +6,9 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
 import ImageUpload from './ImageUpload'
+import { useDispatch } from 'react-redux'
+import { AddProductThunk } from '@/StateManagment/AdminStates/ProductSlice'
+import { toast } from 'sonner'
 
 const Inputs = [
     {
@@ -48,6 +51,18 @@ function ProductForm({ OpenForm, setOpenForm }) {
     })
 
     console.log("Data: ", ProductData)
+    const dispatch = useDispatch();
+
+    function HandleProduct(){
+        dispatch(AddProductThunk(ProductData)).then((res) => {
+            if(res?.payload?.success){
+                setOpenForm(false)
+                toast.success(`${res?.payload?.message}`)
+            }else{
+                toast.error(`${res?.payload?.message}`)
+            }
+        });
+    }
 
     return (
         <div>
@@ -130,7 +145,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                                 placeholder="Enter your product's description" />
                         </div>
                         <div className="">
-                            <Button className="cursor-pointer w-full">Add</Button>
+                            <Button className="cursor-pointer w-full" onClick={() => HandleProduct()}>Add</Button>
                         </div>
                     </div>
                 </SheetContent>
