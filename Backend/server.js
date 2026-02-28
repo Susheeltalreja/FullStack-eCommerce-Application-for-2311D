@@ -26,6 +26,9 @@ app.use(cors({
 }))
 
 app.use(express.json());
+
+app.use("/upload", express.static("Uploads"))
+
 app.use(cookieParser());
 
 app.use("/auth", AuthRoutes);

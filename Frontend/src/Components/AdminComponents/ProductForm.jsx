@@ -7,7 +7,7 @@ import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
 import ImageUpload from './ImageUpload'
 import { useDispatch } from 'react-redux'
-import { AddProductThunk } from '@/StateManagment/AdminStates/ProductSlice'
+import { AddProductThunk, FetchProductThunk } from '@/StateManagment/AdminStates/ProductSlice'
 import { toast } from 'sonner'
 
 const Inputs = [
@@ -57,6 +57,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
         dispatch(AddProductThunk(ProductData)).then((res) => {
             if(res?.payload?.success){
                 setOpenForm(false)
+                dispatch(FetchProductThunk())
                 toast.success(`${res?.payload?.message}`)
             }else{
                 toast.error(`${res?.payload?.message}`)

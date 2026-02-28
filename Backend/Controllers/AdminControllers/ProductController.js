@@ -22,9 +22,9 @@ const ResponseForImage = async (req, res) => {
 }
 
 const AddProduct = async (req, res) => {
-    const {ProductImage, ProductName, ProductPrice, ProductSalePrice, ProductQuantity, ProductBrand, ProductCategory, ProductDesc} = req.body;
+    const { ProductImage, ProductName, ProductPrice, ProductSalePrice, ProductQuantity, ProductBrand, ProductCategory, ProductDesc } = req.body;
     try {
-        if(!ProductImage || !ProductName || !ProductPrice || !ProductQuantity || !ProductBrand || !ProductCategory){
+        if (!ProductImage || !ProductName || !ProductPrice || !ProductQuantity || !ProductBrand || !ProductCategory) {
             return res.json({
                 success: false,
                 message: "All input fields are required"
@@ -32,7 +32,7 @@ const AddProduct = async (req, res) => {
         }
         const price = Number(ProductPrice);
         const sprice = Number(ProductSalePrice);
-        if(ProductSalePrice && sprice >= price){
+        if (ProductSalePrice && sprice >= price) {
             return res.json({
                 success: false,
                 message: "Sale price should be lesser than price"
@@ -56,4 +56,19 @@ const AddProduct = async (req, res) => {
     }
 }
 
-module.exports = { ResponseForImage , AddProduct};
+const FetchProducts = async (req, res) => {
+    try {
+        const AllProducts = await ProductModel.find();
+        return res.status(200).json({
+            success: true,
+            data: AllProducts
+        })
+    } catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server issues'
+        })
+    }
+}
+
+module.exports = { ResponseForImage, AddProduct, FetchProducts };

@@ -10,7 +10,7 @@ function AdminLayout() {
   return (
     <div className='w-screen h-screen flex'>
       <SideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen}/>
-      <div className="w-full h-full">
+      <div className="w-full h-full overflow-auto">
         <Header setSideBarOpen={setSideBarOpen}/>
         <Outlet />
       </div>
