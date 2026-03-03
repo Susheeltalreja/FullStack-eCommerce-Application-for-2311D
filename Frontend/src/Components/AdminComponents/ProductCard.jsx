@@ -2,7 +2,7 @@ import React from 'react'
 
 import Image from "../../Images/Img1.png"
 
-function ProductCard({product}) {
+function ProductCard({product, setOpenForm, setEditProduct}) {
   return (
     <div className="shadow">
         <div className="">
@@ -17,7 +17,12 @@ function ProductCard({product}) {
             <h1 className='font-bold'>{product.ProductBrand}</h1>
         </div>
         <div className="flex justify-between items-center px-4 py-2">
-            <button className='bg-yellow-400 px-4 py-2 rounded-lg cursor-pointer font-bold'>Edit</button>
+            <button className='bg-yellow-400 px-4 py-2 rounded-lg cursor-pointer font-bold'
+            onClick={() => {
+                setOpenForm(true)
+                setEditProduct(product)
+            }}
+            >Edit</button>
             <button className='bg-red-600 px-4 py-2 rounded-lg cursor-pointer font-bold'>Delete</button>
         </div>
     </div>

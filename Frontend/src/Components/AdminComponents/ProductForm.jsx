@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
@@ -37,7 +37,7 @@ const Inputs = [
     },
 ]
 
-function ProductForm({ OpenForm, setOpenForm }) {
+function ProductForm({ OpenForm, setOpenForm, EditProduct }) {
 
     const [ProductData, setProductData] = useState({
         ProductImage: "",
@@ -53,17 +53,34 @@ function ProductForm({ OpenForm, setOpenForm }) {
     console.log("Data: ", ProductData)
     const dispatch = useDispatch();
 
-    function HandleProduct(){
+    function HandleProduct() {
         dispatch(AddProductThunk(ProductData)).then((res) => {
-            if(res?.payload?.success){
+            if (res?.payload?.success) {
                 setOpenForm(false)
                 dispatch(FetchProductThunk())
                 toast.success(`${res?.payload?.message}`)
-            }else{
+            } else {
                 toast.error(`${res?.payload?.message}`)
             }
         });
     }
+
+    useEffect(() => {
+        if (EditProduct) {
+            setProductData({ ...EditProduct })
+        } else {
+            setProductData({
+                ProductImage: "",
+                ProductName: "",
+                ProductPrice: 0,
+                ProductSalePrice: 0,
+                ProductQuantity: 0,
+                ProductCategory: "",
+                ProductBrand: "",
+                ProductDesc: ""
+            })
+        }
+    }, [EditProduct])
 
     return (
         <div>
@@ -75,7 +92,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                     <div className="px-4 space-y-2 overflow-auto">
 
                         <div className="">
-                            <ImageUpload ProductData={ProductData} setProductData={setProductData}/>
+                            <ImageUpload ProductData={ProductData} setProductData={setProductData} />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                             {
@@ -83,6 +100,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                                     <div className={`space-y-2 ${input.name === "ProductQuantity" || input.name === "ProductSalePrice" ? "col-span-2" : ""}`}>
                                         <Label>{input.label}</Label>
                                         <Input type={input.type} placeholder={input.placeholder}
+                                            value={ProductData?.[input.name]}
                                             onChange={(e) => setProductData({
                                                 ...ProductData,
                                                 [input.name]: e.target.value
@@ -96,6 +114,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                             <div className="space-y-2">
                                 <Label>Product Category</Label>
                                 <Select
+                                value={ProductData?.ProductCategory}
                                     onValueChange={(value) => setProductData({
                                         ...ProductData,
                                         "ProductCategory": value
@@ -117,6 +136,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                             <div className="space-y-2">
                                 <Label>Product Brand</Label>
                                 <Select
+                                value={ProductData?.ProductBrand}
                                     onValueChange={(value) => setProductData({
                                         ...ProductData,
                                         "ProductBrand": value
@@ -139,6 +159,7 @@ function ProductForm({ OpenForm, setOpenForm }) {
                         <div className="space-y-2">
                             <Label>Product Description</Label>
                             <Textarea
+                            value={ProductData?.ProductDesc}
                                 onChange={(e) => setProductData({
                                     ...ProductData,
                                     "ProductDesc": e.target.value

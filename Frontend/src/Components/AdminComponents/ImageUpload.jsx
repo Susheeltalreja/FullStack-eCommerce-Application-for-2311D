@@ -49,24 +49,30 @@ function ImageUpload({ ProductData, setProductData }) {
                 onDrop={(params) => HandleDrop(params)}
             >
                 {
-                    !Image ? (<div className="w-full flex justify-around items-center">
-                        <CloudIcon size={40} />
-                        <h1>Drag & Drop or Click to Select Image</h1>
-                    </div>) : (
-                        <div className="w-full flex justify-around items-center">
-                            <FolderIcon size={40} />
-                            <h2 className='w-[150px]'>{Image.name}</h2>
-                            {
-                                ProductData.ProductImage ? (<div className=''>
-                                    <Lock />
-                                </div>) : (
-                                    <div className="">
-                                        <Button variant='outline' onClick={() => HandleRemove()}><X /></Button>
-                                        <Button variant='outline' onClick={() => HandleUploadImage()}><Check /></Button>
-                                    </div>
-                                )
-                            }
+                    ProductData?.ProductImage ? (
+                        <div className="w-full h-32">
+                            <img src={`http://localhost:5000/upload/${ProductData?.ProductImage}`} alt="" className='object-cover h-32 w-full' />
                         </div>
+                    ) : (
+                        !Image ? (<div className="w-full flex justify-around items-center">
+                            <CloudIcon size={40} />
+                            <h1>Drag & Drop or Click to Select Image</h1>
+                        </div>) : (
+                            <div className="w-full flex justify-around items-center">
+                                <FolderIcon size={40} />
+                                <h2 className='w-[150px]'>{Image.name}</h2>
+                                {
+                                    ProductData.ProductImage ? (<div className=''>
+                                        <Lock />
+                                    </div>) : (
+                                        <div className="">
+                                            <Button variant='outline' onClick={() => HandleRemove()}><X /></Button>
+                                            <Button variant='outline' onClick={() => HandleUploadImage()}><Check /></Button>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        )
                     )
                 }
             </Label>

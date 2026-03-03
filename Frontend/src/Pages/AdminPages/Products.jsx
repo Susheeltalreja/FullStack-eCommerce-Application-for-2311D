@@ -17,17 +17,22 @@ function Products() {
 
   // console.log(Products)
 
+  const [EditProduct, setEditProduct] = useState({});
+  // console.log("Edit", EditProduct);
   return (
     <div className='relative py-20 px-4'>
       <div className="absolute top-5 right-5">
-        <ProductForm OpenForm={OpenForm} setOpenForm={setOpenForm}/>
-        <Button className="cursor-pointer" onClick={() => setOpenForm(true)}>Add Product</Button>
+        <ProductForm OpenForm={OpenForm} setOpenForm={setOpenForm} EditProduct={EditProduct}/>
+        <Button className="cursor-pointer" onClick={() => {
+          setOpenForm(true)
+          setEditProduct({})
+        }}>Add Product</Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
         {
           Products && Products.length > 0 ? (
             Products.map((item) => (
-              <ProductCard product={item}/>
+              <ProductCard product={item} setOpenForm={setOpenForm} setEditProduct={setEditProduct}/>
             ))
           ) : (<p>No Products found</p>)
         }
