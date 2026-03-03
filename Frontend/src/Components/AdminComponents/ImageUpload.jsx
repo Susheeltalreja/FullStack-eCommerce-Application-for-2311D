@@ -12,6 +12,10 @@ function ImageUpload({ ProductData, setProductData }) {
 
     function SelectImage(e) {
         setImage(e.target.files[0])
+        setProductData({
+            ...ProductData,
+            ProductImage: ""
+        })
     }
 
     function HandleDrag(e) {
@@ -21,6 +25,10 @@ function ImageUpload({ ProductData, setProductData }) {
     function HandleDrop(e) {
         e.preventDefault();
         setImage(e.dataTransfer.files[0]);
+        setProductData({
+            ...ProductData,
+            ProductImage: ""
+        })
     }
 
     function HandleRemove() {

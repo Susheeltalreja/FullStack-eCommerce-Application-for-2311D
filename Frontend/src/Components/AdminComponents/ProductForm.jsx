@@ -7,7 +7,7 @@ import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
 import ImageUpload from './ImageUpload'
 import { useDispatch } from 'react-redux'
-import { AddProductThunk, FetchProductThunk } from '@/StateManagment/AdminStates/ProductSlice'
+import { AddProductThunk, FetchProductThunk, UpdateProductThunk } from '@/StateManagment/AdminStates/ProductSlice'
 import { toast } from 'sonner'
 
 const Inputs = [
@@ -54,15 +54,27 @@ function ProductForm({ OpenForm, setOpenForm, EditProduct }) {
     const dispatch = useDispatch();
 
     function HandleProduct() {
-        dispatch(AddProductThunk(ProductData)).then((res) => {
-            if (res?.payload?.success) {
-                setOpenForm(false)
-                dispatch(FetchProductThunk())
-                toast.success(`${res?.payload?.message}`)
-            } else {
-                toast.error(`${res?.payload?.message}`)
-            }
-        });
+        if (EditProduct?._id) {
+            dispatch(UpdateProductThunk({Data: ProductData, id: EditProduct?._id})).then((res) => {
+                if (res?.payload?.success) {
+                    setOpenForm(false)
+                    dispatch(FetchProductThunk())
+                    toast.success(`${res?.payload?.message}`)
+                } else {
+                    toast.error(`${res?.payload?.message}`)
+                }
+            });
+        } else {
+            dispatch(AddProductThunk(ProductData)).then((res) => {
+                if (res?.payload?.success) {
+                    setOpenForm(false)
+                    dispatch(FetchProductThunk())
+                    toast.success(`${res?.payload?.message}`)
+                } else {
+                    toast.error(`${res?.payload?.message}`)
+                }
+            });
+        }
     }
 
     useEffect(() => {
@@ -114,7 +126,7 @@ function ProductForm({ OpenForm, setOpenForm, EditProduct }) {
                             <div className="space-y-2">
                                 <Label>Product Category</Label>
                                 <Select
-                                value={ProductData?.ProductCategory}
+                                    value={ProductData?.ProductCategory}
                                     onValueChange={(value) => setProductData({
                                         ...ProductData,
                                         "ProductCategory": value
@@ -136,7 +148,7 @@ function ProductForm({ OpenForm, setOpenForm, EditProduct }) {
                             <div className="space-y-2">
                                 <Label>Product Brand</Label>
                                 <Select
-                                value={ProductData?.ProductBrand}
+                                    value={ProductData?.ProductBrand}
                                     onValueChange={(value) => setProductData({
                                         ...ProductData,
                                         "ProductBrand": value
@@ -159,7 +171,7 @@ function ProductForm({ OpenForm, setOpenForm, EditProduct }) {
                         <div className="space-y-2">
                             <Label>Product Description</Label>
                             <Textarea
-                            value={ProductData?.ProductDesc}
+                                value={ProductData?.ProductDesc}
                                 onChange={(e) => setProductData({
                                     ...ProductData,
                                     "ProductDesc": e.target.value
