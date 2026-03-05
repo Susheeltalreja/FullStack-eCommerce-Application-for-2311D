@@ -26,7 +26,8 @@ function ProductCard({ product, setOpenForm, setEditProduct }) {
             </div>
             <div className="flex justify-between items-center px-4 py-1">
                 <h1 className='font-bold'>{product.ProductName}</h1>
-                <h1 className='font-bold'>Rs. {product.ProductPrice}</h1>
+                <h1 className={`font-bold ${product.ProductSalePrice ? "line-through" : ""}`}>Rs. {product.ProductPrice}</h1>
+                <h1 className={`${product.ProductSalePrice ? "block" : "hidden"} font-bold`}>Rs. {product.ProductSalePrice}</h1>
             </div>
             <div className="flex justify-between items-center px-4 py-1">
                 <h1 className='font-bold'>{product.ProductCategory}</h1>
