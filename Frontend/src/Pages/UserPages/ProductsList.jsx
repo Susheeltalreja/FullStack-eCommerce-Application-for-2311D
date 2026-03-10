@@ -3,7 +3,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel
 import Filter from '@/Components/UserComponents/Filter'
 import ProductCard from '@/Components/UserComponents/ProductCard'
 import { ArrowUpDown } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 function ProductsList() {
 
@@ -24,14 +25,24 @@ function ProductsList() {
       }
     }
     setFilter(NewOptions);
-    console.log(NewOptions);
+    sessionStorage.setItem("Filters", JSON.stringify(NewOptions))
   }
+
+  const [SearchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(Filters))
+  }, [Filters])
+
+  useEffect(() => {
+    setFilter(JSON.parse(sessionStorage.getItem("Filters")))
+  }, [])
 
   return (
     <div className="w-full h-full grid md:grid-cols-[300px_1fr] px-4 py-24 gap-2">
       {/* filters section  */}
       <div className="h-full">
-        <Filter HandleFilters={HandleFilters}/>
+        <Filter HandleFilters={HandleFilters} Filters={Filters}/>
       </div>
       {/* products section  */}
       <div className="h-full p-2">

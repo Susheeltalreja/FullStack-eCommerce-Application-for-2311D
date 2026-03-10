@@ -14,6 +14,10 @@ const AuthRoutes = require("./Routes/AuthRoutes");
 
 //Product Routes
 const ProductRoutes = require("./Routes/AdminRoutes/ProductRoute");
+
+/// User routes
+const ProductRoutesUser = require("./Routes/UserRoutes/ProductRoutes");
+
 // Port
 const PORT = process.env.PORT;
 // redeclare the exprews
@@ -33,5 +37,5 @@ app.use(cookieParser());
 
 app.use("/auth", AuthRoutes);
 app.use("/product", ProductRoutes)
-
+app.use("/user/product", ProductRoutesUser)
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
