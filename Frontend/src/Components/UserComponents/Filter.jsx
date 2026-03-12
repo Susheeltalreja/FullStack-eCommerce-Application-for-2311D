@@ -32,7 +32,6 @@ const Categories = [
 ]
 
 function Filter({HandleFilters, Filters}) {
-    // console.log(Filters.Category[0])
     return (
         <div className="h-full px-4 py-2 border-r">
             <div className="space-y-2">
@@ -41,7 +40,7 @@ function Filter({HandleFilters, Filters}) {
                     Categories.map((item) => (
                         <div className="flex gap-2 items-center justify-start px-2" key={item.name}>
                             <Checkbox id={item.name}
-                            // checked={Filters.Categories.includes(item.name)}
+                            checked={Filters?.Category?.includes(item.name)}
                             onCheckedChange = {() => HandleFilters("Category", item.name)}
                             />
                             <Label htmlFor={item.name}>{item.label}</Label>
@@ -55,6 +54,7 @@ function Filter({HandleFilters, Filters}) {
                     Brands.map((item) => (
                         <div className="flex gap-2 items-center justify-start px-2" key={item.name}>
                             <Checkbox id={item.name} 
+                            checked={Filters?.Brand?.includes(item.name)}
                              onCheckedChange = {() => HandleFilters("Brand", item.name)}
                             />
                             <Label htmlFor={item.name}>{item.label}</Label>

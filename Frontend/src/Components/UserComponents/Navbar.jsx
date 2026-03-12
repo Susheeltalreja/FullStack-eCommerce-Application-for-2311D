@@ -50,7 +50,7 @@ function Navbar() {
             </div>
           ) : (
             <div className="space-x-2">
-              <Link to="/auth/login"><Button className="cursor-pointer bg-orange-400 hover:bg-orange-400">Sign In</Button></Link>
+              <Link to="/auth/login"><Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Sign In</Button></Link>
               <Link to="/auth/register"><Button className="cursor-pointer">Sign up</Button></Link>
             </div>
           )
