@@ -14,7 +14,6 @@ const FetchProductForUser = async (req, res) => {
         if (Brand.length > 0) {
             filters.ProductBrand = { $in: Brand.split(",") }
         }
-        console.log(filters)
 
         let sort = {};
 

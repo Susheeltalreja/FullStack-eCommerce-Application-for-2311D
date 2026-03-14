@@ -4,11 +4,29 @@ import { Button } from '../ui/button'
 import Image from "../../Images/Img1.png";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Minus, Plus } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddToCartThunk } from '@/StateManagment/UserSlices/UserCartSlice';
+import { toast } from 'sonner';
 
 function ProductCard({ Product }) {
 
     const [Open, setOpen] = useState(false)
     const [Quantity, setQuantity] = useState(1);
+
+    const {UserData} = useSelector(st => st.Auth);
+    // console.log(UserData);
+
+    const dispatch = useDispatch();
+    function HandleCart(id){
+        dispatch(AddToCartThunk({UserId: UserData?.Id, ProductId: id, Quantity: Quantity})).then((res) => {
+            if(res?.payload?.success){
+                toast.success(`${res?.payload?.message}`)
+            }else{
+                toast.error(`${res?.payload?.message}`)
+            }
+        })
+    }
+
     return (
         <div className="">
 
@@ -52,7 +70,7 @@ function ProductCard({ Product }) {
                                 ><Plus /></Button>
                             </div>
                             <div className="">
-                                <Button className="cursor-pointer">Add to Cart</Button>
+                                <Button className="cursor-pointer" onClick={() => HandleCart(Product?._id)}>Add to Cart</Button>
                             </div>
                         </div>
                     </DialogFooter>
@@ -79,7 +97,7 @@ function ProductCard({ Product }) {
                     <h1 className='font-bold uppercase text-[12px]'>{Product.ProductBrand}</h1>
                 </div>
                 <div className="flex justify-between items-center px-4 py-2">
-                    <Button className="cursor-pointer w-full">Add to cart</Button>
+                    <Button className="cursor-pointer w-full" onClick={() => HandleCart(Product?._id)}>Add to cart</Button>
                 </div>
             </div>
         </div>
