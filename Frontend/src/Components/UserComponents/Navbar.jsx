@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { useDispatch, useSelector } from 'react-redux'
-import { Hamburger, LogOut } from 'lucide-react'
+import { Hamburger, LogOut, ShoppingCartIcon } from 'lucide-react'
 import { UserLoggedOutThunk } from '@/StateManagment/AuthState'
 import { toast } from 'sonner'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
+import CartComponent from './CartComponent'
 
 function Navbar() {
 
@@ -28,8 +29,11 @@ function Navbar() {
 
   const [openSidebar, setSideBarOpen] = useState(false)
 
+  const [OpenCart, setOpenCart] = useState(false);
+
   return (
     <div className="flex justify-center items-center">
+      <CartComponent OpenCart={OpenCart} setOpenCart={setOpenCart}/>
       <div className='h-12 border-b flex justify-between items-center px-4 w-[80%] bg-white fixed top-5 z-40 rounded-[40px]'>
         <div className="">
           <Link to="/user/home" className='text-lg font-bold'>ShopEase</Link>
@@ -43,6 +47,7 @@ function Navbar() {
         {
           UserData ? (
             <div className="gap-3 md:flex hidden">
+               <Button variant='outline' className="cursor-pointer" onClick={() => setOpenCart(true)}><ShoppingCartIcon /></Button>
               <Avatar className="h-10 w-10">
                 <AvatarFallback className="bg-black text-white font-bold text-2xl">{UserData.Name.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
@@ -81,7 +86,8 @@ function Navbar() {
               </div>
               {
                 UserData ? (
-                  <div className="gap-3">
+                  <div className="flex gap-3">
+                    <Button variant='outline'><ShoppingCartIcon /></Button>
                     <Button className="cursor-pointer w-full" onClick={() => HandleLogout()}>Logout <LogOut /></Button>
                   </div>
                 ) : (

@@ -10,6 +10,14 @@ export const AddToCartThunk = createAsyncThunk(
     }
 )
 
+export const FetchCartThunk = createAsyncThunk(
+    "/cart/FetchCartThunk",
+    async(id) => {
+        const response = await axios.get(`http://localhost:5000/user/cart/get-cart/${id}`);
+        return response?.data;
+    }
+)
+
 const CartSlice = createSlice({
     name: "CartSlice",
     initialState: {
@@ -17,7 +25,15 @@ const CartSlice = createSlice({
         Cart: []
     },
     extraReducers: (build) => {
-
+        build.addCase(FetchCartThunk.pending, (state) => {
+            state.isLoading = true;
+        }).addCase(FetchCartThunk.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.Cart = action?.payload?.Data?.Products
+        }).addCase(FetchCartThunk.rejected, (state) => {
+            state.isLoading = false;
+            state.Cart = [];
+        })
     }
 })
 

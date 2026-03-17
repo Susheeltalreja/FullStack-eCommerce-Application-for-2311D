@@ -5,7 +5,7 @@ import Image from "../../Images/Img1.png";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Minus, Plus } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddToCartThunk } from '@/StateManagment/UserSlices/UserCartSlice';
+import { AddToCartThunk, FetchCartThunk } from '@/StateManagment/UserSlices/UserCartSlice';
 import { toast } from 'sonner';
 
 function ProductCard({ Product }) {
@@ -20,6 +20,7 @@ function ProductCard({ Product }) {
     function HandleCart(id){
         dispatch(AddToCartThunk({UserId: UserData?.Id, ProductId: id, Quantity: Quantity})).then((res) => {
             if(res?.payload?.success){
+                dispatch(FetchCartThunk(UserData?.Id))
                 toast.success(`${res?.payload?.message}`)
             }else{
                 toast.error(`${res?.payload?.message}`)
